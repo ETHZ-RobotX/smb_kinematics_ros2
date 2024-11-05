@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.launch": "python",
+        "chrono": "cpp"
+    }
+}
