@@ -14,7 +14,7 @@ def generate_launch_description():
     # Node configuration
     differential_drive_node = Node(
         package='smb_kinematics',
-        executable='differential_drive_controller_node',
+        executable='smb_kinematics_node',
         name='differential_drive_controller',
         parameters=[config],
         output='screen',  # Optional: logs output to the console

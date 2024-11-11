@@ -2,8 +2,10 @@
 #define SMB_DIFFERENTIAL_DRIVE_CONTROLLER_HPP
 
 #include "rclcpp/rclcpp.hpp"
-#include "geometry_msgs/msg/twist.hpp"
-#include "std_msgs/msg/float64_multi_array.hpp"
+#include <geometry_msgs/msg/twist.hpp>
+#include <std_msgs/msg/float64_multi_array.hpp>
+#include <std_msgs/msg/float64.hpp>
+
 
 class DifferentialDriveController : public rclcpp::Node
 {
@@ -17,8 +19,15 @@ private:
     void publishWheelVelocities(double left_vel, double right_vel);
     double pidControl(double target, double current, double &integral, double &previous_error, double kp, double ki, double kd);
 
+    void calculateMaxWheelSpeed(){ max_wheel_speed_ = max_linear_speed_ / wheel_radius_; }
+
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr joint_command_pub_;
+    // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr LH_joint_velocity_pub_;
+    // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr RH_joint_velocity_pub_;
+    // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr RF_joint_velocity_pub_;
+    // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr LF_joint_velocity_pub_;
+    
     rclcpp::TimerBase::SharedPtr timer_;
     
     // Robot Parameters 
@@ -35,6 +44,9 @@ private:
     // Command velocity
     geometry_msgs::msg::Twist cmd_vel_;
     rclcpp::Time last_cmd_vel_time_;
+
+    double left_vel_ = 0.0;
+    double right_vel_ = 0.0;
 
     // PID parameters & Control variables
     double linear_kp_, linear_ki_, linear_kd_;
