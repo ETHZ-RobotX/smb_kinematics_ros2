@@ -3,8 +3,10 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include <geometry_msgs/msg/twist.hpp>
+#include <geometry_msgs/msg/twist_stamped.hpp>
 #include <std_msgs/msg/float64_multi_array.hpp>
 #include <std_msgs/msg/float64.hpp>
+#include <nav_msgs/msg/odometry.hpp>
 
 
 class DifferentialDriveController : public rclcpp::Node
@@ -14,14 +16,17 @@ public:
     ~DifferentialDriveController();
 
 private:
-    void cmdVelCallback(const geometry_msgs::msg::Twist::SharedPtr msg);
+    void cmdVelCallback(const geometry_msgs::msg::TwistStamped::SharedPtr msg);
+    void odomCallback(const nav_msgs::msg::Odometry::SharedPtr msg);
     void computeWheelVelocities();
     void publishWheelVelocities(double left_vel, double right_vel);
     double pidControl(double target, double current, double &integral, double &previous_error, double kp, double ki, double kd);
 
     void calculateMaxWheelSpeed(){ max_wheel_speed_ = max_linear_speed_ / wheel_radius_; }
 
-    rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
+    rclcpp::Subscription<geometry_msgs::msg::TwistStamped>::SharedPtr cmd_vel_sub_;
+    // state estimation sub
+    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr joint_command_pub_;
     // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr LH_joint_velocity_pub_;
     // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr RH_joint_velocity_pub_;
@@ -42,8 +47,15 @@ private:
     double max_wheel_speed_;
 
     // Command velocity
-    geometry_msgs::msg::Twist cmd_vel_;
+    geometry_msgs::msg::TwistStamped cmd_vel_;
     rclcpp::Time last_cmd_vel_time_;
+    rclcpp::Time last_odom_time_;
+
+    
+
+    // Odometry
+    nav_msgs::msg::Odometry odom_;
+    bool received_odom_{false};
 
     double left_vel_ = 0.0;
     double right_vel_ = 0.0;

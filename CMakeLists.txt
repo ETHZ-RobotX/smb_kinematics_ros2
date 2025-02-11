@@ -10,6 +10,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 
 # Add executable and specify sources
 add_executable(smb_kinematics_node
@@ -28,6 +29,7 @@ ament_target_dependencies(smb_kinematics_node
   rclcpp
   geometry_msgs
   std_msgs
+  nav_msgs
 )
 
 # Install targets

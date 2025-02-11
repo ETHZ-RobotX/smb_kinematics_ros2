@@ -48,8 +48,11 @@ DifferentialDriveController::DifferentialDriveController()
     // LF_joint_velocity_pub_ = this->create_publisher<std_msgs::msg::Float64>("LF_wheel_joint_velocity_gazebo", 10);
 
     // Create a subscription to listen to the cmd_vel topic
-    cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
-        "cmd_vel", 10, std::bind(&DifferentialDriveController::cmdVelCallback, this, std::placeholders::_1));
+    cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::TwistStamped>(
+        "/cmd_vel", 10, std::bind(&DifferentialDriveController::cmdVelCallback, this, std::placeholders::_1));
+
+    odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
+        "state_estimation", 10, std::bind(&DifferentialDriveController::odomCallback, this, std::placeholders::_1));
 
     // Timer to run computeWheelVelocities at a fixed rate defined by controller_frequency_
     timer_ = this->create_wall_timer(
@@ -59,6 +62,9 @@ DifferentialDriveController::DifferentialDriveController()
     // Initialize dt for the PID controller
     dt_ = 1.0 / controller_frequency_;
 
+    last_cmd_vel_time_ = this->now();
+    last_odom_time_ = this->now();
+
     RCLCPP_INFO(this->get_logger(), "DifferentialDriveController has been started");
 }
 
@@ -67,12 +73,19 @@ DifferentialDriveController::~DifferentialDriveController()
     RCLCPP_INFO(this->get_logger(), "Shutting down DifferentialDriveController");
 }
 
-void DifferentialDriveController::cmdVelCallback(const geometry_msgs::msg::Twist::SharedPtr msg)
+void DifferentialDriveController::cmdVelCallback(const geometry_msgs::msg::TwistStamped::SharedPtr msg)
 {
     cmd_vel_ = *msg;
     last_cmd_vel_time_ = this->now();
 
-    RCLCPP_INFO(this->get_logger(), "Received cmd_vel: linear=%.2f angular=%.2f", msg->linear.x, msg->angular.z);
+    // RCLCPP_INFO(this->get_logger(), "Received cmd_vel: linear=%.2f angular=%.2f", msg->linear.x, msg->angular.z);
+}
+
+void DifferentialDriveController::odomCallback(const nav_msgs::msg::Odometry::SharedPtr msg)
+{
+    odom_ = *msg;
+    last_odom_time_ = this->now();
+    received_odom_ = true;
 }
 
 void DifferentialDriveController::computeWheelVelocities()
@@ -80,13 +93,35 @@ void DifferentialDriveController::computeWheelVelocities()
     // double left_vel_ = 0.0;
     // double right_vel_ = 0.0;
 
-    double current_linear = cmd_vel_.linear.x;
-    double current_angular = cmd_vel_.angular.z;
+    rclcpp::Time current_time = this->now();
+
+    if ((current_time - last_cmd_vel_time_).seconds() > 0.2 || (current_time - last_odom_time_).seconds() > 0.2)
+    {
+        // RCLCPP_WARN(this->get_logger(), "Timeout detected. Setting velocities to zero.");
+        cmd_vel_.twist.linear.x = 0.0;
+        cmd_vel_.twist.angular.z = 0.0;
+        odom_.twist.twist.linear.x = 0.0;
+        odom_.twist.twist.angular.z = 0.0;
+    }
+
+    if (!received_odom_)
+    {
+        RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 5000, "No odometry message received yet");
+        return;
+    }
+
+    double current_linear = odom_.twist.twist.linear.x;
+    double current_angular = odom_.twist.twist.angular.z;
 
     RCLCPP_INFO(this->get_logger(), "Current velocities: linear=%.2f angular=%.2f", current_linear, current_angular);
 
-    double linear_output = pidControl(current_linear, cmd_vel_.linear.x, linear_integral_, linear_previous_error_, linear_kp_, linear_ki_, linear_kd_);
-    double angular_output = pidControl(current_angular, cmd_vel_.angular.z, angular_integral_, angular_previous_error_, angular_kp_, angular_ki_, angular_kd_);
+    double linear_output = cmd_vel_.twist.linear.x + pidControl(cmd_vel_.twist.linear.x, current_linear, linear_integral_, linear_previous_error_, linear_kp_, linear_ki_, linear_kd_);
+    double angular_output = cmd_vel_.twist.angular.z + pidControl(cmd_vel_.twist.angular.z, current_angular, angular_integral_, angular_previous_error_, angular_kp_, angular_ki_, angular_kd_);
+
+    RCLCPP_ERROR(this->get_logger(), "Linear output: %.2f", linear_output);
+    RCLCPP_ERROR(this->get_logger(), "Angular output: %.2f", angular_output);
+    RCLCPP_ERROR(this->get_logger(), "gains: %.2f, %.2f, %.2f", linear_kp_, linear_ki_, linear_kd_);
+    RCLCPP_ERROR(this->get_logger(), "gains: %.2f, %.2f, %.2f", angular_kp_, angular_ki_, angular_kd_);
 
     left_vel_ = (linear_output - angular_output * wheel_base_ / 2.0) / wheel_radius_;
     right_vel_ = (linear_output + angular_output * wheel_base_ / 2.0) / wheel_radius_;
@@ -94,10 +129,15 @@ void DifferentialDriveController::computeWheelVelocities()
     left_vel_ = std::clamp(left_vel_, -max_wheel_speed_, max_wheel_speed_);
     right_vel_ = std::clamp(right_vel_, -max_wheel_speed_, max_wheel_speed_);
 
-    // RCLCPP_INFO(this->get_logger(), "Computed wheel speeds: left=%.2f right=%.2f", left_vel_, right_vel_);
+    RCLCPP_ERROR(this->get_logger(), "max_wheel_speed_: %.2f", max_wheel_speed_);
+    RCLCPP_ERROR(this->get_logger(), "left_vel_: %.2f", left_vel_);
+    RCLCPP_ERROR(this->get_logger(), "right_vel_: %.2f", right_vel_);
+    RCLCPP_ERROR(this->get_logger(), "wheel radius and base: %.2f, %.2f", wheel_radius_, wheel_base_);
 
-    left_vel_ = 1.0;
-    right_vel_ = -1.0;
+    RCLCPP_INFO(this->get_logger(), "Computed wheel speeds: left=%.2f right=%.2f", left_vel_, right_vel_);
+
+    // left_vel_ = 1.0;
+    // right_vel_ = -1.0;
 
     publishWheelVelocities(left_vel_, right_vel_);
 }
