@@ -79,6 +79,7 @@ void DifferentialDriveController::cmdVelCallback(const geometry_msgs::msg::Twist
     last_cmd_vel_time_ = this->now();
 
     // RCLCPP_INFO(this->get_logger(), "Received cmd_vel: linear=%.2f angular=%.2f", msg->linear.x, msg->angular.z);
+    printf("Received cmd_vel: linear=%.2f angular=%.2f\n", msg->twist.linear.x, msg->twist.angular.z);
 }
 
 void DifferentialDriveController::odomCallback(const nav_msgs::msg::Odometry::SharedPtr msg)
