@@ -17,55 +17,42 @@ public:
 
 private:
     void cmdVelCallback(const geometry_msgs::msg::TwistStamped::SharedPtr msg);
-    void odomCallback(const nav_msgs::msg::Odometry::SharedPtr msg);
     void computeWheelVelocities();
+    void computeKinematics(double linear_speed, double angular_speed);
     void publishWheelVelocities(double left_vel, double right_vel);
-    double pidControl(double target, double current, double &integral, double &previous_error, double kp, double ki, double kd);
 
-    void calculateMaxWheelSpeed(){ max_wheel_speed_ = max_linear_speed_ / wheel_radius_; }
+    void getMaxWheelSpeed(){ max_wheel_speed_ = max_linear_speed_ / wheel_radius_; }
 
     rclcpp::Subscription<geometry_msgs::msg::TwistStamped>::SharedPtr cmd_vel_sub_;
-    // state estimation sub
-    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr joint_command_pub_;
-    // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr LH_joint_velocity_pub_;
-    // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr RH_joint_velocity_pub_;
-    // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr RF_joint_velocity_pub_;
-    // rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr LF_joint_velocity_pub_;
-    
+
     rclcpp::TimerBase::SharedPtr timer_;
     
     // Robot Parameters 
-    double wheel_base_;
-    double wheel_radius_;
+    double wheel_base_{1.0};
+    double wheel_radius_{1.0};
 
     // Limits
-    double max_linear_speed_;
-    double max_angular_speed_;
-    double max_linear_accel_;
-    double max_angular_accel_;
-    double max_wheel_speed_;
+    double max_linear_speed_{0.0};
+    double max_angular_speed_{0.0};
+    double max_linear_accel_{0.0};
+    double max_angular_accel_{0.0};
+    double max_wheel_speed_{0.0};
 
     // Command velocity
     geometry_msgs::msg::TwistStamped cmd_vel_;
     rclcpp::Time last_cmd_vel_time_;
     rclcpp::Time last_odom_time_;
 
-    
-
-    // Odometry
-    nav_msgs::msg::Odometry odom_;
-    bool received_odom_{false};
-
-    double left_vel_ = 0.0;
-    double right_vel_ = 0.0;
+    double left_wheel_speed_ = 0.0;
+    double right_wheel_speed_ = 0.0;
 
     // PID parameters & Control variables
     double linear_kp_, linear_ki_, linear_kd_;
     double angular_kp_, angular_ki_, angular_kd_;
     double linear_integral_, linear_previous_error_;
     double angular_integral_, angular_previous_error_;
-    double controller_frequency_{100}; // 100 Hz
+    double kinematics_frequency_{100}; // 100 Hz
     rclcpp::Time last_control_time_;
     double dt_{1.0};
 };

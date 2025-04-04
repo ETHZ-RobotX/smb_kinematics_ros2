@@ -38,7 +38,7 @@ install(TARGETS smb_kinematics_node
 )
 
 install(
-  DIRECTORY launch config
+  DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
 )
 
