@@ -6,15 +6,15 @@ import os
 def generate_launch_description():
     # Path to the YAML configuration file
     config = os.path.join(
-        get_package_share_directory('smb_kinematics'),
+        get_package_share_directory('smb_kinematics_ros2'),
         'config',
         'config.yaml'
     )
 
     # Node configuration
     differential_drive_node = Node(
-        package='smb_kinematics',
-        executable='smb_kinematics_node',
+        package='smb_kinematics_ros2',
+        executable='smb_kinematics_ros2_node',
         name='differential_drive_controller',
         parameters=[config],
         output='screen',  # Optional: logs output to the console

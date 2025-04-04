@@ -1,5 +1,5 @@
 #include "rclcpp/rclcpp.hpp"
-#include "smb_kinematics/smb_differential_drive_controller.hpp"
+#include "smb_kinematics_ros2/smb_differential_drive_controller.hpp"
 
 
 int main(int argc, char *argv[])
