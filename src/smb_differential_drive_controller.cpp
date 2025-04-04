@@ -14,12 +14,6 @@ DifferentialDriveController::DifferentialDriveController()
     this->get_parameter("wheel_radius", wheel_radius_);
     this->get_parameter("max_linear_speed", max_linear_speed_);
     this->get_parameter("max_angular_speed", max_angular_speed_);
-    this->get_parameter("linear_kp", linear_kp_);
-    this->get_parameter("linear_ki", linear_ki_);
-    this->get_parameter("linear_kd", linear_kd_);
-    this->get_parameter("angular_kp", angular_kp_);
-    this->get_parameter("angular_ki", angular_ki_);
-    this->get_parameter("angular_kd", angular_kd_);
     this->get_parameter("kinematics_frequency_", kinematics_frequency_);
 
     RCLCPP_INFO(this->get_logger(), "Wheel Base: %.2f", wheel_base_);

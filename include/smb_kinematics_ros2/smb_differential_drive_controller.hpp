@@ -47,11 +47,6 @@ private:
     double left_wheel_speed_ = 0.0;
     double right_wheel_speed_ = 0.0;
 
-    // PID parameters & Control variables
-    double linear_kp_, linear_ki_, linear_kd_;
-    double angular_kp_, angular_ki_, angular_kd_;
-    double linear_integral_, linear_previous_error_;
-    double angular_integral_, angular_previous_error_;
     double kinematics_frequency_{100}; // 100 Hz
     rclcpp::Time last_control_time_;
     double dt_{1.0};
