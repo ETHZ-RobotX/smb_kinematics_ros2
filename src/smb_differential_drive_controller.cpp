@@ -82,7 +82,7 @@ DifferentialDriveController::~DifferentialDriveController()
 void DifferentialDriveController::cmdVelCallback(const geometry_msgs::msg::TwistStamped::SharedPtr msg)
 {
     cmd_vel_ = *msg;
-    last_cmd_vel_time_ = this->now();
+    last_cmd_vel_time_ = msg->header.stamp;
 }
 
 void DifferentialDriveController::computeWheelVelocities()
@@ -91,7 +91,8 @@ void DifferentialDriveController::computeWheelVelocities()
 
     if ((current_time - last_cmd_vel_time_).seconds() > 0.1)
     {
-        RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "No cmd_vel message received for more than 0.1 seconds");        cmd_vel_.twist.linear.x = 0.0;
+        RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "No cmd_vel message received for more than 0.1 seconds");        
+        cmd_vel_.twist.linear.x = 0.0;
         cmd_vel_.twist.angular.z = 0.0;
     }
 
