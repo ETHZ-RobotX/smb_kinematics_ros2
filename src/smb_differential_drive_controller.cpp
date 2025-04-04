@@ -95,8 +95,8 @@ void DifferentialDriveController::computeWheelVelocities()
     //     cmd_vel_.twist.angular.z = 0.0;
     // }
 
-    double linear_requested = cmd_vel_.twist.linear.x;
-    double angular_requested = cmd_vel_.twist.angular.z;
+    double linear_requested = cmd_vel_.linear.x;
+    double angular_requested = cmd_vel_.angular.z;
 
     computeKinematics(linear_requested, angular_requested);
 
