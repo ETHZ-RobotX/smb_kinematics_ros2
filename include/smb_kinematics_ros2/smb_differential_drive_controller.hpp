@@ -16,14 +16,14 @@ public:
     ~DifferentialDriveController();
 
 private:
-    void cmdVelCallback(const geometry_msgs::msg::TwistStamped::SharedPtr msg);
+    void cmdVelCallback(const geometry_msgs::msg::Twist::SharedPtr msg);
     void computeWheelVelocities();
     void computeKinematics(double linear_speed, double angular_speed);
     void publishWheelVelocities(double left_vel, double right_vel);
 
     void getMaxWheelSpeed(){ max_wheel_speed_ = max_linear_speed_ / wheel_radius_; }
 
-    rclcpp::Subscription<geometry_msgs::msg::TwistStamped>::SharedPtr cmd_vel_sub_;
+    rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr joint_command_pub_;
 
     rclcpp::TimerBase::SharedPtr timer_;
@@ -40,7 +40,7 @@ private:
     double max_wheel_speed_{0.0};
 
     // Command velocity
-    geometry_msgs::msg::TwistStamped cmd_vel_;
+    geometry_msgs::msg::Twist cmd_vel_;
     rclcpp::Time last_cmd_vel_time_;
     rclcpp::Time last_odom_time_;
 

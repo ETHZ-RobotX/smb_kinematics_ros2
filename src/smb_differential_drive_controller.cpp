@@ -58,7 +58,7 @@ DifferentialDriveController::DifferentialDriveController()
     joint_command_pub_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_joint_commands", 10);
 
     // Create a subscription to listen to the cmd_vel topic
-    cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::TwistStamped>(
+    cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
         "/cmd_vel", 10, std::bind(&DifferentialDriveController::cmdVelCallback, this, std::placeholders::_1));
 
     // Timer to run computeWheelVelocities at a fixed rate defined by kinematics_frequency_
@@ -79,7 +79,7 @@ DifferentialDriveController::~DifferentialDriveController()
     RCLCPP_INFO(this->get_logger(), "Shutting down DifferentialDriveController");
 }
 
-void DifferentialDriveController::cmdVelCallback(const geometry_msgs::msg::TwistStamped::SharedPtr msg)
+void DifferentialDriveController::cmdVelCallback(const geometry_msgs::msg::Twist::SharedPtr msg)
 {
     cmd_vel_ = *msg;
     last_cmd_vel_time_ = this->now();
@@ -89,11 +89,11 @@ void DifferentialDriveController::computeWheelVelocities()
 {
     rclcpp::Time current_time = this->now();
 
-    if ((current_time - last_cmd_vel_time_).seconds() > 0.1)
-    {
-        RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "No cmd_vel message received for more than 0.1 seconds");        cmd_vel_.twist.linear.x = 0.0;
-        cmd_vel_.twist.angular.z = 0.0;
-    }
+    // if ((current_time - last_cmd_vel_time_).seconds() > 0.1)
+    // {
+    //     RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "No cmd_vel message received for more than 0.1 seconds");        cmd_vel_.twist.linear.x = 0.0;
+    //     cmd_vel_.twist.angular.z = 0.0;
+    // }
 
     double linear_requested = cmd_vel_.twist.linear.x;
     double angular_requested = cmd_vel_.twist.angular.z;
