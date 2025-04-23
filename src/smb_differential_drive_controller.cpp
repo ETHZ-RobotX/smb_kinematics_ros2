@@ -7,7 +7,7 @@ DifferentialDriveController::DifferentialDriveController()
     this->declare_parameter<double>("wheel_base", 0.68); //34 22
     this->declare_parameter<double>("wheel_radius", 0.22);
     this->declare_parameter<double>("max_linear_speed", 1.0);
-    this->declare_parameter<double>("max_angular_speed", 1.0);
+    this->declare_parameter<double>("max_angular_speed", 3.0);
     this->declare_parameter<double>("kinematics_frequency_", 100.0);
 
     this->get_parameter("wheel_base", wheel_base_);
@@ -95,12 +95,12 @@ void DifferentialDriveController::computeWheelVelocities()
 
     computeKinematics(linear_requested, angular_requested);
 
-    double alpha = std::max(std::abs(left_wheel_speed_) - max_wheel_speed_, std::abs(right_wheel_speed_) - max_wheel_speed_);
+    // double alpha = std::max(std::abs(left_wheel_speed_) - max_wheel_speed_, std::abs(right_wheel_speed_) - max_wheel_speed_);
 
-    if (alpha > 0.0)
-    {
-        computeKinematics(linear_requested - alpha * std::copysignf(1.0, linear_requested), angular_requested);
-    }
+    // if (alpha > 0.0)
+    // {
+    //     computeKinematics(linear_requested - alpha * std::copysignf(1.0, linear_requested), angular_requested);
+    // }
 
     // Safety
     left_wheel_speed_ = std::clamp(left_wheel_speed_, -max_wheel_speed_, max_wheel_speed_);
@@ -118,7 +118,7 @@ void DifferentialDriveController::computeKinematics(double linear_speed, double 
 void DifferentialDriveController::publishWheelVelocities(double left_vel, double right_vel)
 {
     auto msg = std::make_shared<std_msgs::msg::Float64MultiArray>();
-    msg->data = {left_vel, right_vel};
+    msg->data = {this->now().seconds(), left_vel, right_vel};
     joint_command_pub_->publish(*msg);
 }
 
