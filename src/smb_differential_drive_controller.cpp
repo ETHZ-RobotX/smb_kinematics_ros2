@@ -95,6 +95,7 @@ void DifferentialDriveController::computeWheelVelocities()
 
     computeKinematics(linear_requested, angular_requested);
 
+    // TODO: check with Per
     // double alpha = std::max(std::abs(left_wheel_speed_) - max_wheel_speed_, std::abs(right_wheel_speed_) - max_wheel_speed_);
 
     // if (alpha > 0.0)
