@@ -133,7 +133,7 @@ void DifferentialDriveController::computeKinematics(double linear_speed, double 
 void DifferentialDriveController::publishWheelVelocities(double left_vel, double right_vel)
 {
     auto msg = std::make_shared<std_msgs::msg::Float64MultiArray>();
-    msg->data = {left_vel, right_vel};
+    msg->data = {this->now().seconds(), left_vel, right_vel};
     joint_command_pub_->publish(*msg);
 }
 
