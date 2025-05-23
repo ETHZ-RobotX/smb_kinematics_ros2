@@ -22,6 +22,7 @@ private:
     void publishWheelVelocities(double left_vel, double right_vel);
 
     void getMaxWheelSpeed(){ max_wheel_speed_ = max_linear_speed_ / wheel_radius_; }
+    void getMaxAngularSpeed(){ max_angular_speed_ = max_linear_speed_ / (wheel_base_ / 2.0); }
 
     rclcpp::Subscription<geometry_msgs::msg::TwistStamped>::SharedPtr cmd_vel_sub_;
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr joint_command_pub_;

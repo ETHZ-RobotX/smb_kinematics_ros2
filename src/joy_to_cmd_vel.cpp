@@ -27,7 +27,7 @@ private:
         // Left stick: axes[1] = forward/back, axes[0] = left/right
         if (msg->axes.size() >= 2) {
             twist.twist.linear.x = max_linear_ * msg->axes[1];
-            twist.twist.angular.z = max_angular_ * msg->axes[0];
+            twist.twist.angular.z = max_angular_ * msg->axes[2];
         } else {
             twist.twist.linear.x = 0.0;
             twist.twist.angular.z = 0.0;

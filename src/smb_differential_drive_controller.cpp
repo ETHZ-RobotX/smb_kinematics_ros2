@@ -44,6 +44,7 @@ DifferentialDriveController::DifferentialDriveController()
     }
     if (wheel_radius_ > 0.01){
         getMaxWheelSpeed();
+        getMaxAngularSpeed();
     } else {
         RCLCPP_ERROR(this->get_logger(), "Wheel radius must not be zero");
     }
@@ -83,36 +84,50 @@ void DifferentialDriveController::computeWheelVelocities()
 {
     rclcpp::Time current_time = this->now();
 
-    // if ((current_time - last_cmd_vel_time_).seconds() > 0.1)
-    // {
-    //     RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "No cmd_vel message received for more than 0.1 seconds");        
-    //     cmd_vel_.twist.linear.x = 0.0;
-    //     cmd_vel_.twist.angular.z = 0.0;
-    // }
-
     double linear_requested = cmd_vel_.twist.linear.x;
     double angular_requested = cmd_vel_.twist.angular.z;
 
     computeKinematics(linear_requested, angular_requested);
 
-    double alpha = std::max(std::abs(left_wheel_speed_) - max_wheel_speed_, std::abs(right_wheel_speed_) - max_wheel_speed_);
+    auto left_wheel_sign = std::copysignf(1.0, left_wheel_speed_);
+    auto right_wheel_sign = std::copysignf(1.0, right_wheel_speed_);
+
+    double left_over_limit = std::abs(left_wheel_speed_) - max_wheel_speed_;
+    double right_over_limit = std::abs(right_wheel_speed_) - max_wheel_speed_;
+
+    if (left_over_limit <= 0.0)
+    {
+        left_over_limit = 0.0;
+    }
+    if (right_over_limit <= 0.0)
+    {
+        right_over_limit = 0.0;
+    }
+
+    double alpha = std::max(left_over_limit / max_wheel_speed_, right_over_limit / max_wheel_speed_ );
+    alpha = std::clamp(alpha, 0.0, 1.0);
 
     if (alpha > 0.0)
     {
         computeKinematics(linear_requested - alpha * std::copysignf(1.0, linear_requested), angular_requested);
     }
 
-    // Safety
-    left_wheel_speed_ = std::clamp(left_wheel_speed_, -max_wheel_speed_, max_wheel_speed_);
-    right_wheel_speed_ = std::clamp(right_wheel_speed_, -max_wheel_speed_, max_wheel_speed_);
+    if ((current_time - last_cmd_vel_time_).seconds() > 0.1)
+    {
+        RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "No cmd_vel message received for more than 0.1 seconds");        
+        left_wheel_speed_ = 0.0;
+        right_wheel_speed_ = 0.0;
+    }
 
     publishWheelVelocities(left_wheel_speed_, right_wheel_speed_);
 }
 
 void DifferentialDriveController::computeKinematics(double linear_speed, double angular_speed)
 {
-    left_wheel_speed_ = (linear_speed - angular_speed * wheel_base_ / 2.0) / wheel_radius_;
-    right_wheel_speed_ = (linear_speed + angular_speed * wheel_base_ / 2.0) / wheel_radius_;
+    double left_wheel_speed = (linear_speed - angular_speed * wheel_base_ / 2.0) / wheel_radius_;
+    double right_wheel_speed = (linear_speed + angular_speed * wheel_base_ / 2.0) / wheel_radius_;
+    left_wheel_speed_ = std::clamp(left_wheel_speed, -max_wheel_speed_, max_wheel_speed_);
+    right_wheel_speed_ = std::clamp(right_wheel_speed, -max_wheel_speed_, max_wheel_speed_);
 }
 
 void DifferentialDriveController::publishWheelVelocities(double left_vel, double right_vel)
