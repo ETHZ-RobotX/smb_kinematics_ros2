@@ -6,8 +6,8 @@ DifferentialDriveController::DifferentialDriveController()
     // Declare and retrieve parameters from the parameter server or config file
     this->declare_parameter<double>("wheel_base", 0.68); //34 22
     this->declare_parameter<double>("wheel_radius", 0.22);
-    this->declare_parameter<double>("max_linear_speed", 1.0);
-    this->declare_parameter<double>("max_angular_speed", 1.0);
+    this->declare_parameter<double>("max_linear_speed", 2.0);
+    this->declare_parameter<double>("max_angular_speed", 2.0);
     this->declare_parameter<double>("kinematics_frequency_", 100.0);
 
     this->get_parameter("wheel_base", wheel_base_);
@@ -86,6 +86,9 @@ void DifferentialDriveController::computeWheelVelocities()
 
     double linear_requested = cmd_vel_.twist.linear.x;
     double angular_requested = cmd_vel_.twist.angular.z;
+
+    std::clamp(linear_requested, -max_linear_speed_, max_linear_speed_);
+    std::clamp(angular_requested, -max_angular_speed_, max_angular_speed_);
 
     computeKinematics(linear_requested, angular_requested);
 
