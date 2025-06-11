@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(smb_kinematics_ros2)
+project(smb_kinematics)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -17,8 +17,8 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 
 # Add executable and specify sources
-add_executable(smb_kinematics_ros2_node
-  # src/smb_kinematics_ros2_node.cpp
+add_executable(smb_kinematics_node
+  # src/smb_kinematics_node.cpp
   src/smb_differential_drive_controller.cpp
 )
 
@@ -31,7 +31,7 @@ add_executable(smb_global_to_local_odometry
 )
 
 # Specify include directories
-target_include_directories(smb_kinematics_ros2_node PUBLIC
+target_include_directories(smb_kinematics_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
@@ -47,7 +47,7 @@ target_include_directories(smb_global_to_local_odometry PUBLIC
 )
 
 # Link libraries
-ament_target_dependencies(smb_kinematics_ros2_node
+ament_target_dependencies(smb_kinematics_node
   rclcpp
   geometry_msgs
   std_msgs
@@ -72,7 +72,7 @@ ament_target_dependencies(smb_global_to_local_odometry
 )
 
 # Install targets
-install(TARGETS smb_kinematics_ros2_node
+install(TARGETS smb_kinematics_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
