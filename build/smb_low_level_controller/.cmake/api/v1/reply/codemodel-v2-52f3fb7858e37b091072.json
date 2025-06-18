@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-025a08c503b5b5c69d67.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "smb_low_level_controller",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "smb_low_level_controller_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-smb_low_level_controller_uninstall-55b5fbd9a4987ec6dc0e.json",
+					"name" : "smb_low_level_controller_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "speed_control_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-speed_control_node-c20d9ef9bb68dc1d28d6.json",
+					"name" : "speed_control_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-f2196b5f988a12b7bdc0.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_low_level_controller",
+		"source" : "/home/robotx/workspace/smb_ros2_workspace/src/core/smb_low_level_controller/src/smb_low_level_controller"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

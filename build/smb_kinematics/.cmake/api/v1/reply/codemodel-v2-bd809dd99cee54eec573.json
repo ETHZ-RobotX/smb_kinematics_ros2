@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-b5be661718599abc73ff.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "smb_kinematics",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "smb_cmd_vel::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-smb_cmd_vel-7fa1a109227509150516.json",
+					"name" : "smb_cmd_vel",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "smb_kinematics_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-smb_kinematics_node-4a585a159b93f107ee08.json",
+					"name" : "smb_kinematics_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "smb_kinematics_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-smb_kinematics_uninstall-5522b91dc7280c880a91.json",
+					"name" : "smb_kinematics_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-86c71c1c731ea4704cb9.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_kinematics",
+		"source" : "/home/robotx/workspace/smb_ros2_workspace/src/core/smb_kinematics"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

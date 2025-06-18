@@ -1,0 +1,22 @@
+[ 50%] Built target smb_cmd_vel
+[100%] Built target smb_kinematics_node
+-- Install configuration: ""
+-- Execute custom install script
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/lib/smb_kinematics/smb_kinematics_node
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/lib/smb_kinematics/smb_cmd_vel
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/launch/smb_differential_drive.launch.py
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/ament_index/resource_index/package_run_dependencies/smb_kinematics
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/ament_index/resource_index/parent_prefix_path/smb_kinematics
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/environment/path.sh
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/environment/path.dsv
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/local_setup.bash
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/local_setup.sh
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/local_setup.zsh
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/local_setup.dsv
+-- Symlinking: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/package.dsv
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/ament_index/resource_index/packages/smb_kinematics
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/cmake/smb_kinematicsConfig.cmake
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/cmake/smb_kinematicsConfig-version.cmake
+-- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/package.xml

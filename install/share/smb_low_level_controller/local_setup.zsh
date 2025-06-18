@@ -1,0 +1,1 @@
+/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_low_level_controller/ament_cmake_environment_hooks/local_setup.zsh

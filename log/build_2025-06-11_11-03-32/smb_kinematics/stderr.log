@@ -1,0 +1,7 @@
+[01m[K/home/robotx/workspace/smb_ros2_workspace/src/core/smb_kinematics/src/smb_differential_drive_controller.cpp:[m[K In member function ‘[01m[Kvoid DifferentialDriveController::[01;32m[KcomputeWheelVelocities[m[K()[m[K’:
+[01m[K/home/robotx/workspace/smb_ros2_workspace/src/core/smb_kinematics/src/smb_differential_drive_controller.cpp:92:10:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kleft_wheel_sign[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   92 |     auto [01;35m[Kleft_wheel_sign[m[K = std::copysignf(1.0, left_wheel_speed_);
+      |          [01;35m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/robotx/workspace/smb_ros2_workspace/src/core/smb_kinematics/src/smb_differential_drive_controller.cpp:93:10:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kright_wheel_sign[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   93 |     auto [01;35m[Kright_wheel_sign[m[K = std::copysignf(1.0, right_wheel_speed_);
+      |          [01;35m[K^~~~~~~~~~~~~~~~[m[K

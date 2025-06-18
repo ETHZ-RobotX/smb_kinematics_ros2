@@ -1,0 +1,28 @@
+[0.009s] Invoking command in '/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/serial': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/serial -- -j22 -l22
+[0.065s] [100%] Built target serial
+[0.076s] Invoked command in '/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/serial' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/serial -- -j22 -l22
+[0.085s] Invoking command in '/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/serial': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/serial
+[0.092s] -- Install configuration: ""
+[0.092s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/lib/libserial.a
+[0.092s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/include/serial/serial.h
+[0.092s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/include/serial/v8stdint.h
+[0.092s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/environment/library_path.sh
+[0.092s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/environment/library_path.dsv
+[0.092s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/ament_index/resource_index/package_run_dependencies/serial
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/ament_index/resource_index/parent_prefix_path/serial
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/environment/ament_prefix_path.sh
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/environment/ament_prefix_path.dsv
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/environment/path.sh
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/environment/path.dsv
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/local_setup.bash
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/local_setup.sh
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/local_setup.zsh
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/local_setup.dsv
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/package.dsv
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/ament_index/resource_index/packages/serial
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.093s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/cmake/ament_cmake_export_libraries-extras.cmake
+[0.094s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/cmake/serialConfig.cmake
+[0.094s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/cmake/serialConfig-version.cmake
+[0.094s] -- Up-to-date: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/serial/package.xml
+[0.095s] Invoked command in '/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/serial' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/serial

@@ -6,8 +6,8 @@ DifferentialDriveController::DifferentialDriveController()
     // Declare and retrieve parameters from the parameter server or config file
     this->declare_parameter<double>("wheel_base", 0.68); //34 22
     this->declare_parameter<double>("wheel_radius", 0.22);
-    this->declare_parameter<double>("max_linear_speed", 2.0);
-    this->declare_parameter<double>("max_angular_speed", 2.0);
+    this->declare_parameter<double>("max_linear_speed", 5.0);
+    this->declare_parameter<double>("max_angular_speed", 5.0);
     this->declare_parameter<double>("kinematics_frequency_", 100.0);
 
     this->get_parameter("wheel_base", wheel_base_);
@@ -24,29 +24,29 @@ DifferentialDriveController::DifferentialDriveController()
 
     if (wheel_base_ <= 0.0)
     {
-        RCLCPP_ERROR(this->get_logger(), "Wheel base must be positive");
+        // RCLCPP_ERROR(this->get_logger(), "Wheel base must be positive");
         throw std::invalid_argument("Wheel base must be positive");
     } 
     if (wheel_radius_ <= 0.0)
     {
-        RCLCPP_ERROR(this->get_logger(), "Wheel radius must be positive");
+        // RCLCPP_ERROR(this->get_logger(), "Wheel radius must be positive");
         throw std::invalid_argument("Wheel radius must be positive");
     }
     if (max_linear_speed_ <= 0.0)
     {
-        RCLCPP_ERROR(this->get_logger(), "Max linear speed must be positive");
+        // RCLCPP_ERROR(this->get_logger(), "Max linear speed must be positive");
         throw std::invalid_argument("Max linear speed must be positive");
     }
     if (max_angular_speed_ <= 0.0)
     {
-        RCLCPP_ERROR(this->get_logger(), "Max angular speed must be positive");
+        // RCLCPP_ERROR(this->get_logger(), "Max angular speed must be positive");
         throw std::invalid_argument("Max angular speed must be positive");
     }
     if (wheel_radius_ > 0.01){
         getMaxWheelSpeed();
         getMaxAngularSpeed();
     } else {
-        RCLCPP_ERROR(this->get_logger(), "Wheel radius must not be zero");
+        // RCLCPP_ERROR(this->get_logger(), "Wheel radius must not be zero");
     }
     
     // Create a publisher to publish the wheel velocities
@@ -117,7 +117,7 @@ void DifferentialDriveController::computeWheelVelocities()
 
     if ((current_time - last_cmd_vel_time_).seconds() > 0.1)
     {
-        RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "No cmd_vel message received for more than 0.1 seconds");        
+        // RCLCPP_ERROR_THROTTLE(this->get_logger(), *this->get_clock(), 1000, "No cmd_vel message received for more than 0.1 seconds");        
         left_wheel_speed_ = 0.0;
         right_wheel_speed_ = 0.0;
     }

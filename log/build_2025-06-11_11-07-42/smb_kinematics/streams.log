@@ -1,0 +1,26 @@
+[0.008s] Invoking command in '/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_kinematics': CMAKE_PREFIX_PATH=/opt/ros/jazzy:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_kinematics -- -j22 -l22
+[0.066s] [ 50%] Built target smb_cmd_vel
+[0.066s] [100%] Built target smb_kinematics_node
+[0.084s] Invoked command in '/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_kinematics' returned '0': CMAKE_PREFIX_PATH=/opt/ros/jazzy:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_kinematics -- -j22 -l22
+[0.085s] Invoking command in '/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_kinematics': CMAKE_PREFIX_PATH=/opt/ros/jazzy:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_kinematics
+[0.092s] -- Install configuration: ""
+[0.093s] -- Execute custom install script
+[0.094s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/lib/smb_kinematics/smb_kinematics_node
+[0.094s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/lib/smb_kinematics/smb_cmd_vel
+[0.094s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/launch/smb_differential_drive.launch.py
+[0.094s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/ament_index/resource_index/package_run_dependencies/smb_kinematics
+[0.094s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/ament_index/resource_index/parent_prefix_path/smb_kinematics
+[0.094s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/environment/ament_prefix_path.sh
+[0.095s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/environment/ament_prefix_path.dsv
+[0.095s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/environment/path.sh
+[0.095s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/environment/path.dsv
+[0.095s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/local_setup.bash
+[0.095s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/local_setup.sh
+[0.095s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/local_setup.zsh
+[0.096s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/local_setup.dsv
+[0.096s] -- Symlinking: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/package.dsv
+[0.099s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/ament_index/resource_index/packages/smb_kinematics
+[0.100s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/cmake/smb_kinematicsConfig.cmake
+[0.100s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/cmake/smb_kinematicsConfig-version.cmake
+[0.100s] -- Up-to-date symlink: /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/install/share/smb_kinematics/package.xml
+[0.110s] Invoked command in '/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_kinematics' returned '0': CMAKE_PREFIX_PATH=/opt/ros/jazzy:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_kinematics

@@ -1,0 +1,2 @@
+source;share/smb_low_level_controller/environment/ament_prefix_path.sh
+source;share/smb_low_level_controller/environment/path.sh

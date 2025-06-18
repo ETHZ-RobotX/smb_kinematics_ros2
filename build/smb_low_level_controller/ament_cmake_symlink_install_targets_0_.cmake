@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_low_level_controller/speed_control_node" "TARGETS" "speed_control_node" "DESTINATION" "lib/smb_low_level_controller")

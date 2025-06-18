@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/robotx/workspace/smb_ros2_workspace/dependencies/smb_kinematics_ros2/build/smb_kinematics/smb_kinematics_node" "TARGETS" "smb_kinematics_node" "DESTINATION" "lib/smb_kinematics")
