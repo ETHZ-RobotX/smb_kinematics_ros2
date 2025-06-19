@@ -22,7 +22,7 @@ public:
       tf_buffer_(this->get_clock()),
       tf_listener_(tf_buffer_)
     {
-        this->declare_parameter("topic_name", "/dlio/odom_node/odom");
+        this->declare_parameter("topic_name", "/state_estimation");
         this->declare_parameter("use_ground_truth", false);
         this->declare_parameter("output_topic", "/local_odometry");
 
@@ -51,7 +51,7 @@ public:
                 std::bind(&GlobalToLocalVel::pointcloudCallback, this, std::placeholders::_1)
             );
             pointcloud_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(
-                "/dlio/odom_node/pointcloud/deskewed",
+                "/registered_scan",
                 10
             );
         }
