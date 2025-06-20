@@ -1,4 +1,8 @@
 #include "smb_kinematics_ros2/smb_differential_drive_controller.hpp"
+#include "sensor_msgs/msg/joint_state.hpp" // Required for JointState messages
+#include "std_msgs/msg/float64_multi_array.hpp" // Required for Float64MultiArray for publishing wheel velocities
+
+#include <algorithm> // Required for std::find
 
 DifferentialDriveController::DifferentialDriveController()
     : Node("smb_differential_drive_controller")
@@ -9,18 +13,32 @@ DifferentialDriveController::DifferentialDriveController()
     this->declare_parameter<double>("max_linear_speed", 5.0);
     this->declare_parameter<double>("max_angular_speed", 5.0);
     this->declare_parameter<double>("kinematics_frequency_", 100.0);
+    this->declare_parameter<std::string>("input_topic", "/joint_states"); // New parameter for joint states topic
+    this->declare_parameter<std::string>("left_wheel_name", "LF_WHEEL_JOINT"); // New parameter for left wheel joint name
+    this->declare_parameter<std::string>("right_wheel_name", "RF_WHEEL_JOINT"); // New parameter for right wheel joint name
+
 
     this->get_parameter("wheel_base", wheel_base_);
     this->get_parameter("wheel_radius", wheel_radius_);
     this->get_parameter("max_linear_speed", max_linear_speed_);
     this->get_parameter("max_angular_speed", max_angular_speed_);
     this->get_parameter("kinematics_frequency_", kinematics_frequency_);
+    this->get_parameter("input_topic", joint_states_input_topic_); // Get joint states input topic
+    this->get_parameter("left_wheel_name", left_wheel_name_); // Get left wheel joint name
+    this->get_parameter("right_wheel_name", right_wheel_name_); // Get right wheel joint name
+
 
     RCLCPP_INFO(this->get_logger(), "Wheel Base: %.2f", wheel_base_);
     RCLCPP_INFO(this->get_logger(), "Wheel Radius: %.2f", wheel_radius_);
     RCLCPP_INFO(this->get_logger(), "Max Linear Speed: %.2f", max_linear_speed_);
     RCLCPP_INFO(this->get_logger(), "Max Angular Speed: %.2f", max_angular_speed_);
     RCLCPP_INFO(this->get_logger(), "Kinematics Frequency: %.2f", kinematics_frequency_);
+    RCLCPP_INFO(this->get_logger(), "Joint States Input Topic: %s", joint_states_input_topic_.c_str());
+    
+    // DEBUG: Print the exact values of the parameter-loaded wheel names
+    RCLCPP_INFO(this->get_logger(), "Configured Left Wheel Name: '%s'", left_wheel_name_.c_str());
+    RCLCPP_INFO(this->get_logger(), "Configured Right Wheel Name: '%s'", right_wheel_name_.c_str());
+
 
     if (wheel_base_ <= 0.0)
     {
@@ -49,12 +67,21 @@ DifferentialDriveController::DifferentialDriveController()
         // RCLCPP_ERROR(this->get_logger(), "Wheel radius must not be zero");
     }
     
-    // Create a publisher to publish the wheel velocities
+    // Create a publisher to publish the wheel velocities (from differential drive calculations)
     joint_command_pub_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("wheel_joint_commands", 10);
 
     // Create a subscription to listen to the cmd_vel topic
     cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::TwistStamped>(
         "/cmd_vel", 10, std::bind(&DifferentialDriveController::cmdVelCallback, this, std::placeholders::_1));
+
+    // Create a subscription to listen to the joint_states topic
+    joint_states_sub_ = this->create_subscription<sensor_msgs::msg::JointState>(
+        joint_states_input_topic_, 10, std::bind(&DifferentialDriveController::jointStatesCallback, this, std::placeholders::_1));
+
+    // Create a publisher to publish the extracted wheel velocities
+    // This will publish: [timestamp, left_angular_vel, right_angular_vel, left_linear_vel, right_linear_vel]
+    wheel_velocities_pub_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("/wheel_velocities", 10);
+
 
     // Timer to run computeWheelVelocities at a fixed rate defined by kinematics_frequency_
     timer_ = this->create_wall_timer(
@@ -79,6 +106,58 @@ void DifferentialDriveController::cmdVelCallback(const geometry_msgs::msg::Twist
     cmd_vel_ = *msg;
     last_cmd_vel_time_ = msg->header.stamp;
 }
+
+// Callback function for joint states, publishing in the desired format
+void DifferentialDriveController::jointStatesCallback(const sensor_msgs::msg::JointState::SharedPtr msg)
+{
+    double left_wheel_speed_rps = 0.0;
+    double right_wheel_speed_rps = 0.0;
+
+    // Use std::find to get the index of the wheel names
+    auto it_left = std::find(msg->name.begin(), msg->name.end(), left_wheel_name_);
+    size_t left_idx = std::distance(msg->name.begin(), it_left);
+
+    auto it_right = std::find(msg->name.begin(), msg->name.end(), right_wheel_name_);
+    size_t right_idx = std::distance(msg->name.begin(), it_right);
+
+    // Check if both wheel names were found and if their corresponding velocities exist
+    bool left_found = (it_left != msg->name.end() && left_idx < msg->velocity.size());
+    bool right_found = (it_right != msg->name.end() && right_idx < msg->velocity.size());
+
+    if (left_found)
+    {
+        left_wheel_speed_rps = msg->velocity[left_idx];
+        RCLCPP_DEBUG(this->get_logger(), "Found Left Wheel Joint: '%s' with velocity: %f", left_wheel_name_.c_str(), left_wheel_speed_rps);
+    }
+    else
+    {
+        RCLCPP_WARN(this->get_logger(), "Left wheel joint '%s' not found or velocity data missing in JointState message. Publishing 0.0 for its velocities.", left_wheel_name_.c_str());
+    }
+
+    if (right_found)
+    {
+        right_wheel_speed_rps = msg->velocity[right_idx];
+        RCLCPP_DEBUG(this->get_logger(), "Found Right Wheel Joint: '%s' with velocity: %f", right_wheel_name_.c_str(), right_wheel_speed_rps);
+    }
+    else
+    {
+        RCLCPP_WARN(this->get_logger(), "Right wheel joint '%s' not found or velocity data missing in JointState message. Publishing 0.0 for its velocities.", right_wheel_name_.c_str());
+    }
+    
+    // Calculate linear wheel speeds
+    double left_wheel_speed_ms = left_wheel_speed_rps * wheel_radius_;
+    double right_wheel_speed_ms = right_wheel_speed_rps * wheel_radius_;
+
+    // Get timestamp from the message header
+    // The timestamp is composed of seconds and nanoseconds
+    double time_k = static_cast<double>(msg->header.stamp.sec) + static_cast<double>(msg->header.stamp.nanosec) * 1e-9;
+
+    // Publish the extracted wheel velocities in the desired format
+    auto wheel_vel_msg = std::make_shared<std_msgs::msg::Float64MultiArray>();
+    wheel_vel_msg->data = {time_k, left_wheel_speed_rps, right_wheel_speed_rps, left_wheel_speed_ms, right_wheel_speed_ms};
+    wheel_velocities_pub_->publish(*wheel_vel_msg);
+}
+
 
 void DifferentialDriveController::computeWheelVelocities()
 {
