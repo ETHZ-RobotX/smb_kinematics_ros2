@@ -56,6 +56,7 @@ ament_target_dependencies(smb_kinematics_node
   geometry_msgs
   std_msgs
   nav_msgs
+  sensor_msgs
 )
 
 ament_target_dependencies(smb_cmd_vel
