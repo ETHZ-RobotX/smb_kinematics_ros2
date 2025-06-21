@@ -127,22 +127,13 @@ void DifferentialDriveController::jointStatesCallback(const sensor_msgs::msg::Jo
     if (left_found)
     {
         left_wheel_speed_rps = msg->velocity[left_idx];
-        RCLCPP_DEBUG(this->get_logger(), "Found Left Wheel Joint: '%s' with velocity: %f", left_wheel_name_.c_str(), left_wheel_speed_rps);
-    }
-    else
-    {
-        RCLCPP_WARN(this->get_logger(), "Left wheel joint '%s' not found or velocity data missing in JointState message. Publishing 0.0 for its velocities.", left_wheel_name_.c_str());
     }
 
     if (right_found)
     {
         right_wheel_speed_rps = msg->velocity[right_idx];
-        RCLCPP_DEBUG(this->get_logger(), "Found Right Wheel Joint: '%s' with velocity: %f", right_wheel_name_.c_str(), right_wheel_speed_rps);
     }
-    else
-    {
-        RCLCPP_WARN(this->get_logger(), "Right wheel joint '%s' not found or velocity data missing in JointState message. Publishing 0.0 for its velocities.", right_wheel_name_.c_str());
-    }
+
     
     // Calculate linear wheel speeds
     double left_wheel_speed_ms = left_wheel_speed_rps * wheel_radius_;
