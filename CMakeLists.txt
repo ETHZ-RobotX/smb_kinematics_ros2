@@ -18,6 +18,7 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(pcl_conversions REQUIRED)
 find_package(pcl_ros REQUIRED)
 find_package(tf2_sensor_msgs REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 
 # Add executable and specify sources
@@ -78,6 +79,7 @@ ament_target_dependencies(smb_global_to_local_odometry
   pcl_ros
   sensor_msgs
   tf2_sensor_msgs
+  tf2_geometry_msgs
 )
 
 # Install targets
