@@ -134,18 +134,13 @@ void DifferentialDriveController::jointStatesCallback(const sensor_msgs::msg::Jo
         right_wheel_speed_rps = msg->velocity[right_idx];
     }
 
-    
-    // Calculate linear wheel speeds
-    double left_wheel_speed_ms = left_wheel_speed_rps * wheel_radius_;
-    double right_wheel_speed_ms = right_wheel_speed_rps * wheel_radius_;
-
     // Get timestamp from the message header
     // The timestamp is composed of seconds and nanoseconds
     double time_k = static_cast<double>(msg->header.stamp.sec) + static_cast<double>(msg->header.stamp.nanosec) * 1e-9;
 
     // Publish the extracted wheel velocities in the desired format
     auto wheel_vel_msg = std::make_shared<std_msgs::msg::Float64MultiArray>();
-    wheel_vel_msg->data = {time_k, left_wheel_speed_rps, right_wheel_speed_rps, left_wheel_speed_ms, right_wheel_speed_ms};
+    wheel_vel_msg->data = {time_k, left_wheel_speed_rps, right_wheel_speed_rps};
     wheel_velocities_pub_->publish(*wheel_vel_msg);
 }
 
