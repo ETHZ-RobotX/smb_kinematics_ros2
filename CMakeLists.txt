@@ -35,6 +35,9 @@ add_executable(smb_global_to_local_odometry
   src/global_to_local_odometry.cpp
 )
 
+add_executable(odometry_and_pointcloud_conversion_graph_msf
+  src/odometry_and_pointcloud_conversion_graph_msf.cpp)
+
 # Specify include directories
 target_include_directories(smb_kinematics_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -47,6 +50,11 @@ target_include_directories(smb_cmd_vel PUBLIC
 )
 
 target_include_directories(smb_global_to_local_odometry PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+
+target_include_directories(odometry_and_pointcloud_conversion_graph_msf PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
@@ -82,6 +90,21 @@ ament_target_dependencies(smb_global_to_local_odometry
   tf2_geometry_msgs
 )
 
+ament_target_dependencies(odometry_and_pointcloud_conversion_graph_msf
+  rclcpp
+  geometry_msgs
+  std_msgs
+  nav_msgs
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
+  pcl_conversions
+  pcl_ros
+  sensor_msgs
+  tf2_sensor_msgs
+  tf2_geometry_msgs
+)
+
 # Install targets
 install(TARGETS smb_kinematics_node
   DESTINATION lib/${PROJECT_NAME}
@@ -92,6 +115,10 @@ install(TARGETS smb_cmd_vel
 )
 
 install(TARGETS smb_global_to_local_odometry
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(TARGETS odometry_and_pointcloud_conversion_graph_msf
   DESTINATION lib/${PROJECT_NAME}
 )
 
